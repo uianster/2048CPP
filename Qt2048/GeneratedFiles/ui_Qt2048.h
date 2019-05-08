@@ -14,14 +14,15 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -48,8 +49,9 @@ public:
     QTextEdit *Elemet_12;
     QTextEdit *Elemet_8;
     QTextEdit *Elemet_4;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
+    QLabel *label;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *horizontalLayout;
     QPushButton *ButtonStart;
     QPushButton *ButtonReset;
     QMenuBar *menuBar;
@@ -60,14 +62,14 @@ public:
     {
         if (Qt2048Class->objectName().isEmpty())
             Qt2048Class->setObjectName(QStringLiteral("Qt2048Class"));
-        Qt2048Class->resize(509, 641);
+        Qt2048Class->resize(505, 682);
         centralWidget = new QWidget(Qt2048Class);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(40, 34, 421, 441));
+        gridLayoutWidget->setGeometry(QRect(40, 110, 421, 441));
         gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
+        gridLayout->setSpacing(5);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -167,28 +169,45 @@ public:
 
         gridLayout->addWidget(Elemet_4, 3, 3, 1, 1);
 
-        verticalLayoutWidget = new QWidget(centralWidget);
-        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(160, 490, 160, 80));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        ButtonStart = new QPushButton(verticalLayoutWidget);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(60, -20, 401, 131));
+        QFont font;
+        font.setFamily(QStringLiteral("Times New Roman"));
+        font.setPointSize(32);
+        font.setBold(true);
+        font.setItalic(false);
+        font.setWeight(75);
+        label->setFont(font);
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(40, 560, 421, 91));
+        horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
+        horizontalLayout->setSpacing(10);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        ButtonStart = new QPushButton(horizontalLayoutWidget);
         ButtonStart->setObjectName(QStringLiteral("ButtonStart"));
+        QFont font1;
+        font1.setPointSize(20);
+        font1.setBold(true);
+        font1.setWeight(75);
+        ButtonStart->setFont(font1);
+        ButtonStart->setAutoFillBackground(false);
 
-        verticalLayout->addWidget(ButtonStart);
+        horizontalLayout->addWidget(ButtonStart);
 
-        ButtonReset = new QPushButton(verticalLayoutWidget);
+        ButtonReset = new QPushButton(horizontalLayoutWidget);
         ButtonReset->setObjectName(QStringLiteral("ButtonReset"));
+        ButtonReset->setFont(font1);
 
-        verticalLayout->addWidget(ButtonReset);
+        horizontalLayout->addWidget(ButtonReset);
 
         Qt2048Class->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Qt2048Class);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 509, 26));
+        menuBar->setGeometry(QRect(0, 0, 505, 26));
         Qt2048Class->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Qt2048Class);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -221,7 +240,7 @@ public:
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:72pt;\"> </span></p></body></html>", Q_NULLPTR));
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
         Elemet_2->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -287,6 +306,7 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
+        label->setText(QApplication::translate("Qt2048Class", "let's play 2048!", Q_NULLPTR));
         ButtonStart->setText(QApplication::translate("Qt2048Class", "Start", Q_NULLPTR));
         ButtonReset->setText(QApplication::translate("Qt2048Class", "Reset", Q_NULLPTR));
     } // retranslateUi

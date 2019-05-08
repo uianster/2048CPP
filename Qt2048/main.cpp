@@ -1,10 +1,10 @@
-#include "Qt2048.h"
+#include "Qt2048UI.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	Qt2048 w;
+	Qt2048UI w;
 	w.show();
 	return a.exec();
 }

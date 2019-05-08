@@ -1,119 +1,65 @@
-#include "Qt2048.h"
-#include <qevent.h> //不包含时容易无法准确找到key()
 
-#define MAX_NUM 16
-#define MIN_NUM 1
-#include <stdlib.h>
+#include <vector>
+#include <algorithm>
 #include <time.h>
-
-Qt2048::Qt2048(QWidget *parent)
-	: QMainWindow(parent)
-	, m_bFirstTime(true)
+#include "Qt2048.h"
+namespace Q2048 {
+Qt2048::Qt2048()
 {
-	memset(m_curdata, 0 ,sizeof(int)*16);
-	
-	ui.setupUi(this);
-	init();
-	this->grabKeyboard();
+	m_bFirstTime = true;
+	memset(m_curdata, 0, sizeof(int) * 16);
 }
+
 Qt2048::~Qt2048()
 {
 
-
 }
-
-void Qt2048::startGame()
+void Qt2048::oprateDown() //向下操作
 {
-	
-}
-
-void Qt2048::resetGame()
-{
-
-}
-
-void Qt2048::initColorMap()
-{
-	m_colorMap.insert(std::make_pair(0, "background-color: rgb(205,193,180)"));
-	m_colorMap.insert(std::make_pair(2, "background-color: rgb(238, 228, 218)"));
-	m_colorMap.insert(std::make_pair(4, "background-color: rgb(237, 224, 200)"));
-	m_colorMap.insert(std::make_pair(8, "background-color: rgb(242, 177, 121)"));
-	m_colorMap.insert(std::make_pair(16, "background-color: rgb(245, 149, 99)"));
-	m_colorMap.insert(std::make_pair(32, "background-color: rgb(246, 124, 95)"));
-	m_colorMap.insert(std::make_pair(64, "background-color: rgb(246, 94, 59)"));
-	m_colorMap.insert(std::make_pair(128, "background-color: rgb(237, 207, 114)"));
-	m_colorMap.insert(std::make_pair(256, "background-color: rgb(237, 204, 97)"));
-	m_colorMap.insert(std::make_pair(512, "background-color: rgb(237, 200, 81)"));
-	m_colorMap.insert(std::make_pair(1024, "background-color: rgb(237, 197, 63)"));
-	m_colorMap.insert(std::make_pair(2048, "background-color: rgb(237, 197, 63)"));
-}
-
-void Qt2048::initElementMap()
-{
-	m_elementMap.insert(std::make_pair(0, ui.Elemet_1));
-	m_elementMap.insert(std::make_pair(1, ui.Elemet_2));
-	m_elementMap.insert(std::make_pair(2, ui.Elemet_3));
-	m_elementMap.insert(std::make_pair(3, ui.Elemet_4));
-	m_elementMap.insert(std::make_pair(4, ui.Elemet_5));
-	m_elementMap.insert(std::make_pair(5, ui.Elemet_6));
-	m_elementMap.insert(std::make_pair(6, ui.Elemet_7));
-	m_elementMap.insert(std::make_pair(7, ui.Elemet_8));
-	m_elementMap.insert(std::make_pair(8, ui.Elemet_9));
-	m_elementMap.insert(std::make_pair(9, ui.Elemet_10));
-	m_elementMap.insert(std::make_pair(10, ui.Elemet_11));
-	m_elementMap.insert(std::make_pair(11, ui.Elemet_12));
-	m_elementMap.insert(std::make_pair(12, ui.Elemet_13));
-	m_elementMap.insert(std::make_pair(13, ui.Elemet_14));
-	m_elementMap.insert(std::make_pair(14, ui.Elemet_15));
-	m_elementMap.insert(std::make_pair(15, ui.Elemet_16));
-}
-
-void Qt2048::init()
-{
-	initColorMap();
-	initElementMap();
-
-	ranGeneration();
-	//更新控件颜色和数字
-	UpgradeElementMap(m_curdata);
-}
-void Qt2048::DownOprate() //向下操作
-{
-
 	//去除空隙
-	DeDownSpace();
-	
+	removeDownSpace();
+	bool isChange = false;
+
 	//合并处理
 	for (int j = 0; j < 4; j++)
 	{
 		int k = 0;
 		for (int i = 1; i < 4; i++)
 		{
-			if (m_curdata[j+4*i] == 0)
+			if (m_curdata[j + 4 * i] == 0)
 			{
-				break;
+				continue;
 			}
 			if (m_curdata[j + 4 * (i - 1)] == m_curdata[j + 4 * i])
 			{
 				m_curdata[j + 4 * (i - 1)] += m_curdata[j + 4 * i];
 				m_curdata[j + 4 * i] = 0;
+				isChange = true;
 			}
 		}
 	}
-	//去除空隙
-	DeDownSpace();
-	
-	//更新界面
-	UpgradeElementMap(m_curdata);
 
+	if (isChange || m_bDownLock)
+	{
+		generateRanData();
+	}
+	else
+	{
+		m_bleftLock = true;
+		m_bRightLock = true;
+		m_bUpLock = true;
+	}
+	m_bDownLock = false;
+
+	//去除空隙
+	removeDownSpace();
 }
 
-
-
-void Qt2048::UpOprate()
+void Qt2048::oprateUp()
 {
-	deUPSpace();
+	removeUPSpace();
 	bool isChange = false;
+
 	//合并处理
 	for (int j = 0; j < 4; j++)
 	{
@@ -122,30 +68,36 @@ void Qt2048::UpOprate()
 		{
 			if (m_curdata[j + 4 * (i - 1)] == 0)
 			{
-				break;
+				continue;
 			}
 			if (m_curdata[j + 4 * i] == m_curdata[j + 4 * (i - 1)])
 			{
-				m_curdata[j + 4 * i] += m_curdata[j + 4 * (i-1)];
-				m_curdata[j + 4 * (i-1)] = 0;
+				m_curdata[j + 4 * i] += m_curdata[j + 4 * (i - 1)];
+				m_curdata[j + 4 * (i - 1)] = 0;
 				isChange = true;
 			}
 		}
 	}
-	if (isChange)
+
+	if (isChange || m_bUpLock)
 	{
-		//ranGeneration();
+		generateRanData();
+	}
+	else
+	{
+		m_bleftLock = true;
+		m_bRightLock = true;
+		m_bDownLock = true;
 	}
 
-	deUPSpace();
+	m_bUpLock = false;
 
-	//更新界面
-	UpgradeElementMap(m_curdata);
+	removeUPSpace();
 }
 
-void Qt2048::RightOprate()
+void Qt2048::oprateRight()
 {
-	DeRightSpace();
+	removeRightSpace();
 	bool isChange = false;
 	//合并处理
 	for (int j = 0; j < 4; j++)
@@ -153,12 +105,12 @@ void Qt2048::RightOprate()
 		int k = 3;
 		for (int i = 3; i >= 0; i--)
 		{
-			if (m_curdata[(i-1) + j * 4] == 0)
+			if (m_curdata[(i - 1) + j * 4] == 0)
 			{
-				break;
+				continue;
 			}
 
-			if (m_curdata[(i - 1) + j * 4]== m_curdata[i + j * 4])
+			if (m_curdata[(i - 1) + j * 4] == m_curdata[i + j * 4])
 			{
 				m_curdata[(i - 1) + j * 4] += m_curdata[i + j * 4];
 				m_curdata[i + j * 4] = 0;
@@ -167,23 +119,27 @@ void Qt2048::RightOprate()
 		}
 	}
 
-	if (isChange)
+	if (isChange || m_bRightLock)
 	{
-		//ranGeneration();
+		generateRanData();
+	}
+	else
+	{
+		m_bUpLock = true;
+		m_bleftLock = true;
+		m_bDownLock = true;
 	}
 
-
-	//
-	DeRightSpace();
-	//更新界面
-	UpgradeElementMap(m_curdata);
+	m_bRightLock = false;
+	
+	removeRightSpace();
 }
 
-void Qt2048::LeftOprate()
+void Qt2048::oprateLeft()
 {
-	DeLeftSpace();
+	removeLeftSpace();
 	bool isChange = false;
-	//合并处理
+
 	//合并处理
 	for (int j = 0; j < 4; j++)
 	{
@@ -192,7 +148,7 @@ void Qt2048::LeftOprate()
 		{
 			if (m_curdata[i + j * 4] == 0)
 			{
-				break;
+				continue;
 			}
 			if (m_curdata[i + j * 4] == m_curdata[(i - 1) + 4 * j])
 			{
@@ -202,21 +158,26 @@ void Qt2048::LeftOprate()
 			}
 		}
 	}
-	if (isChange)
+	if (isChange || m_bleftLock)
 	{
-		//ranGeneration();
+		generateRanData();
+	}
+	else
+	{
+		m_bUpLock = true;
+		m_bRightLock = true;
+		m_bDownLock = true;
 	}
 
-	DeLeftSpace();
-	//更新界面
-	UpgradeElementMap(m_curdata);
+	m_bleftLock = false;
+
+	removeLeftSpace();
 }
 
-void Qt2048::deUPSpace()
+void Qt2048::removeUPSpace()
 {
 	int curdatacopy[16] = { 0 };
 	//去除空隙
-	bool isChange = false;
 
 	for (int j = 0; j < 4; j++)
 	{
@@ -227,22 +188,16 @@ void Qt2048::deUPSpace()
 			{
 				curdatacopy[j + k * 4] = m_curdata[j + i * 4];
 				k--;
-				isChange = true;
-
 			}
 		}
 	}
-	if (isChange)
-	{
-		//ranGeneration();
-	}
+
 	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
 }
 
-void Qt2048::DeDownSpace()
+void Qt2048::removeDownSpace()
 {
 	int curdatacopy[16] = { 0 };
-	bool isChange = false;
 
 	for (int j = 0; j < 4; j++)
 	{
@@ -253,21 +208,17 @@ void Qt2048::DeDownSpace()
 			{
 				curdatacopy[j + k * 4] = m_curdata[j + i * 4];
 				k++;
-				isChange = true;
 			}
 		}
 	}
-	if (isChange)
-	{
-		//nGeneration();
-	}
+
 	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
 }
 
-void Qt2048::DeLeftSpace()
+void Qt2048::removeLeftSpace()
 {
 	int curdatacopy[16] = { 0 };
-	bool isChange = false;
+
 	for (int j = 0; j < 4; j++)
 	{
 		int k = 0;
@@ -277,21 +228,16 @@ void Qt2048::DeLeftSpace()
 			{
 				curdatacopy[k + j * 4] = m_curdata[i + j * 4];
 				k++;
-				isChange = true;
 			}
 		}
 	}
-	if (isChange)
-	{
-		//nGeneration();
-	}
+
 	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
 }
 
-void Qt2048::DeRightSpace()
+void Qt2048::removeRightSpace()
 {
 	int curdatacopy[16] = { 0 };
-	bool isChange = false;
 
 	for (int j = 0; j < 4; j++)
 	{
@@ -302,59 +248,24 @@ void Qt2048::DeRightSpace()
 			{
 				curdatacopy[k + j * 4] = m_curdata[i + j * 4];
 				k--;
-				isChange = true;
-
 			}
 		}
 	}
-	if (isChange)
-	{
-		//nGeneration();
-	}
+
 	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
 }
-
-void Qt2048::keyPressEvent(QKeyEvent *event)
+void fun()
 {
-	int curkey = event->key();
-	switch (curkey)
-	{
-		case Qt::Key_Up:
-		{
-			UpOprate();
-			break;
-		}
-		case Qt::Key_Down:
-		{
-			DownOprate();    
-			break;
-		}
-		case Qt::Key_Left:
-		{
-			LeftOprate();
-			break;
-		}
-		case Qt::Key_Right:
-		{
-			RightOprate();
-			break;
-		}
-		default:
-		{
-			QWidget::keyPressEvent(event);
-			break;
-		}
-	}
-}
 
-void Qt2048::ranGeneration()
+}
+void Qt2048::generateRanData()
 {
 	srand((unsigned)time(NULL));
 	if (m_bFirstTime) //第一次生成两个
 	{
-		int index1 = (rand() % (MAX_NUM - MIN_NUM)) + MIN_NUM;
-		int index2 = (rand() % (MAX_NUM - MIN_NUM)) + MIN_NUM;
-	
+		int index1 = (rand() % (15 - 0)) + 0;
+		int index2 = (rand() % (15 - 0)) + 0;
+
 		m_curdata[index1] = 2;
 		m_curdata[index2] = 2;
 		
@@ -364,7 +275,7 @@ void Qt2048::ranGeneration()
 	{
 		bool isFull = true;
 
-		for (int i =0; i<16;i++)
+		for (int i = 0; i < 16; i++)
 		{
 			if (m_curdata[i] != 0)
 			{
@@ -372,23 +283,23 @@ void Qt2048::ranGeneration()
 				break;
 			}
 		}
-
+		
 		if (isFull) //如果m_curdata中没有零了，怎gameover
 		{
-			//TODO game over!!
+			//TODO game over!! 使用回调函数通知
 		}
 		else
 		{
 			std::vector<int > c;
-			
-			for (int i=0;i<16;i++)
+
+			for (int i = 0; i < 16; i++)
 			{
-				if (m_curdata[i]==0)
+				if (m_curdata[i] == 0)
 				{
 					c.push_back(i);
 				}
 			}
-			
+
 			int index = rand() % c.size();
 			int tem = c[index];
 
@@ -400,31 +311,8 @@ void Qt2048::ranGeneration()
 			{
 				m_curdata[tem] = 2;
 			}
-
-			//UpgradeElementMap(m_curdata);
 		}
 	}
 }
 
-void Qt2048::UpgradeElementMap(int curdata[])
-{
-	QString qstrColor;
-	
-	ranGeneration();
-	for (int i=0;i<16;i++)
-	{
-		int tem = curdata[i];
-		qstrColor = QString::fromStdString(getColor(curdata[i]));
-		getElement(i)->setStyleSheet(qstrColor);
-		if (tem==0)
-		{
-			QString str =" ";
-			getElement(i)->setText(str);
-			continue;
-		}
-		QString str = QString::number(tem);
-		getElement(i)->setText(str);
-	}
-
-
-}
+}; //namespace Q2048
