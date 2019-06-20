@@ -1,11 +1,10 @@
 #pragma once
-
+#include <functional>
+#include<map>
 namespace Q2048
 {
-	
 	class Qt2048
 	{
-
 	public:
 		Qt2048();
 		~Qt2048();
@@ -13,31 +12,29 @@ namespace Q2048
 	private:
 
 		bool m_bFirstTime;
-
-		bool m_bUpLock;
-		bool m_bDownLock;
-		bool m_bRightLock;
-		bool m_bleftLock;
-		int m_curdata[16];
-
+		int m_curData[16];
+		int m_curDatacopy[16];
+		typedef std::function<void()> Proc;
+		Proc m_procStatus;
 	public:
-		void oprateDown(); //向下操作
-		void oprateUp(); //向上操作
-		void oprateRight(); //向右操作
-		void oprateLeft(); //向左操作
-	
-		void generateRanData(); //空缺随机生成数字
-	
-		inline int* getCurrentData() 
-		{
-			return m_curdata;
-		}
 		
+		void CallBackProc(Proc callback);	//callback game status
+		void generateRanData();				//random generate data 
+		void operateDown();                 //key Down
+		void operateUp();					//key Up
+		void operateLeft();                 //key Left
+		void operateRight();                //key Right
+		inline int* getCurrentData()        
+		{
+			return m_curData;
+		}
 	private:
-		void removeRightSpace();
-		void removeLeftSpace();
-		void removeUPSpace();
-		void removeDownSpace();
-
+		void randomFillData();
+		void rightToLeft();
+		void upToLeft();
+		void downToLeft();
+		bool moveData(); 
+		bool isGameOver();
 	};
+
 };

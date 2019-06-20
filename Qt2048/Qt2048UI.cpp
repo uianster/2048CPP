@@ -1,32 +1,37 @@
 #include "Qt2048UI.h"
-#include <qevent.h> //²»°üº¬Ê±ÈÝÒ×ÎÞ·¨×¼È·ÕÒµ½key()
+#include <qevent.h> //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½×¼È·ï¿½Òµï¿½key()
 
 #define MAX_NUM 16
 #define MIN_NUM 1
 
 
 Qt2048UI::Qt2048UI(QWidget *parent)
-	: QMainWindow(parent)
+	: QMainWindow(parent),
+	b_isStart(false)
 {
 	ui.setupUi(this);
-	init();
 
+	m_Qt2048.CallBackProc(std::bind(&Qt2048UI::updateStatus, this/*,std::placeholders::_1*/));
 	this->grabKeyboard();
 }
 Qt2048UI::~Qt2048UI()
 {
-
+	
 
 }
 
 void Qt2048UI::startGame()
 {
-	
+	init();
+	b_isStart = true;
 }
 
 void Qt2048UI::resetGame()
 {
-
+	Q2048::Qt2048 q2048;
+	m_Qt2048 = q2048;
+	updateUI(m_Qt2048.getCurrentData());
+	init();
 }
 
 void Qt2048UI::initColorMap()
@@ -47,22 +52,22 @@ void Qt2048UI::initColorMap()
 
 void Qt2048UI::initElementMap()
 {
-	m_elementMap.insert(std::make_pair(0, ui.Elemet_1));
-	m_elementMap.insert(std::make_pair(1, ui.Elemet_2));
-	m_elementMap.insert(std::make_pair(2, ui.Elemet_3));
-	m_elementMap.insert(std::make_pair(3, ui.Elemet_4));
-	m_elementMap.insert(std::make_pair(4, ui.Elemet_5));
-	m_elementMap.insert(std::make_pair(5, ui.Elemet_6));
-	m_elementMap.insert(std::make_pair(6, ui.Elemet_7));
-	m_elementMap.insert(std::make_pair(7, ui.Elemet_8));
-	m_elementMap.insert(std::make_pair(8, ui.Elemet_9));
-	m_elementMap.insert(std::make_pair(9, ui.Elemet_10));
-	m_elementMap.insert(std::make_pair(10, ui.Elemet_11));
-	m_elementMap.insert(std::make_pair(11, ui.Elemet_12));
-	m_elementMap.insert(std::make_pair(12, ui.Elemet_13));
-	m_elementMap.insert(std::make_pair(13, ui.Elemet_14));
-	m_elementMap.insert(std::make_pair(14, ui.Elemet_15));
-	m_elementMap.insert(std::make_pair(15, ui.Elemet_16));
+	m_elementMap.insert(std::make_pair(0, ui.lineEdit_1));
+	m_elementMap.insert(std::make_pair(1, ui.lineEdit_2));
+	m_elementMap.insert(std::make_pair(2, ui.lineEdit_3));
+	m_elementMap.insert(std::make_pair(3, ui.lineEdit_4));
+	m_elementMap.insert(std::make_pair(4, ui.lineEdit_5));
+	m_elementMap.insert(std::make_pair(5, ui.lineEdit_6));
+	m_elementMap.insert(std::make_pair(6, ui.lineEdit_7));
+	m_elementMap.insert(std::make_pair(7, ui.lineEdit_8));
+	m_elementMap.insert(std::make_pair(8, ui.lineEdit_9));
+	m_elementMap.insert(std::make_pair(9, ui.lineEdit_10));
+	m_elementMap.insert(std::make_pair(10, ui.lineEdit_11));
+	m_elementMap.insert(std::make_pair(11, ui.lineEdit_12));
+	m_elementMap.insert(std::make_pair(12, ui.lineEdit_13));
+	m_elementMap.insert(std::make_pair(13, ui.lineEdit_14));
+	m_elementMap.insert(std::make_pair(14, ui.lineEdit_15));
+	m_elementMap.insert(std::make_pair(15, ui.lineEdit_16));
 }
 
 void Qt2048UI::init()
@@ -71,37 +76,40 @@ void Qt2048UI::init()
 	initElementMap();
 
 	m_Qt2048.generateRanData();
-	//¸üÐÂ¿Ø¼þÑÕÉ«ºÍÊý×Ö
+	//ï¿½ï¿½ï¿½Â¿Ø¼ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	updateUI(m_Qt2048.getCurrentData());
 }
 
 
 void Qt2048UI::keyPressEvent(QKeyEvent *event)
 {
+	if (!b_isStart)
+		return;
+		
 	int curkey = event->key();
 	switch (curkey)
 	{
 		case Qt::Key_Up:
-		{
-			m_Qt2048.oprateUp();
+		{	
+			m_Qt2048.operateUp();
 			updateUI(m_Qt2048.getCurrentData());
 			break;
 		}
 		case Qt::Key_Down:
 		{
-			m_Qt2048.oprateDown();
+			m_Qt2048.operateDown();
 			updateUI(m_Qt2048.getCurrentData());
 			break;
 		}
 		case Qt::Key_Left:
 		{
-			m_Qt2048.oprateLeft();
+			m_Qt2048.operateLeft();
 			updateUI(m_Qt2048.getCurrentData());
 			break;
 		}
 		case Qt::Key_Right:
 		{
-			m_Qt2048.oprateRight();
+			m_Qt2048.operateRight();
 			updateUI(m_Qt2048.getCurrentData());
 			break;
 		}
@@ -131,10 +139,13 @@ void Qt2048UI::updateUI(int curdata[])
 		}
 		QString str = QString::number(tem);
 		
-		getElement(i)->setFontPointSize(50);
 		getElement(i)->setText(str); 
-		getElement(i)->setAlignment(Qt::AlignCenter);
 		
 	}
 
+}
+
+void Qt2048UI::updateStatus()
+{
+	ui.label->setText("Game over!");
 }

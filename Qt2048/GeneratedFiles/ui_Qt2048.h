@@ -13,15 +13,14 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -31,29 +30,27 @@ class Ui_Qt2048Class
 {
 public:
     QWidget *centralWidget;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
-    QTextEdit *Elemet_5;
-    QTextEdit *Elemet_9;
-    QTextEdit *Elemet_13;
-    QTextEdit *Elemet_2;
-    QTextEdit *Elemet_15;
-    QTextEdit *Elemet_11;
-    QTextEdit *Elemet_6;
-    QTextEdit *Elemet_10;
-    QTextEdit *Elemet_7;
-    QTextEdit *Elemet_3;
-    QTextEdit *Elemet_1;
-    QTextEdit *Elemet_14;
-    QTextEdit *Elemet_16;
-    QTextEdit *Elemet_12;
-    QTextEdit *Elemet_8;
-    QTextEdit *Elemet_4;
     QLabel *label;
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *ButtonStart;
     QPushButton *ButtonReset;
+    QLineEdit *lineEdit_14;
+    QLineEdit *lineEdit_13;
+    QLineEdit *lineEdit_16;
+    QLineEdit *lineEdit_15;
+    QLineEdit *lineEdit_11;
+    QLineEdit *lineEdit_10;
+    QLineEdit *lineEdit_9;
+    QLineEdit *lineEdit_12;
+    QLineEdit *lineEdit_8;
+    QLineEdit *lineEdit_6;
+    QLineEdit *lineEdit_5;
+    QLineEdit *lineEdit_7;
+    QLineEdit *lineEdit_4;
+    QLineEdit *lineEdit_2;
+    QLineEdit *lineEdit_1;
+    QLineEdit *lineEdit_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -62,113 +59,9 @@ public:
     {
         if (Qt2048Class->objectName().isEmpty())
             Qt2048Class->setObjectName(QStringLiteral("Qt2048Class"));
-        Qt2048Class->resize(505, 682);
+        Qt2048Class->resize(497, 747);
         centralWidget = new QWidget(Qt2048Class);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        gridLayoutWidget = new QWidget(centralWidget);
-        gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(40, 110, 421, 441));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(5);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        Elemet_5 = new QTextEdit(gridLayoutWidget);
-        Elemet_5->setObjectName(QStringLiteral("Elemet_5"));
-        Elemet_5->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_5, 2, 0, 1, 1);
-
-        Elemet_9 = new QTextEdit(gridLayoutWidget);
-        Elemet_9->setObjectName(QStringLiteral("Elemet_9"));
-        Elemet_9->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_9, 1, 0, 1, 1);
-
-        Elemet_13 = new QTextEdit(gridLayoutWidget);
-        Elemet_13->setObjectName(QStringLiteral("Elemet_13"));
-        Elemet_13->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_13, 0, 0, 1, 1);
-
-        Elemet_2 = new QTextEdit(gridLayoutWidget);
-        Elemet_2->setObjectName(QStringLiteral("Elemet_2"));
-        Elemet_2->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_2, 3, 1, 1, 1);
-
-        Elemet_15 = new QTextEdit(gridLayoutWidget);
-        Elemet_15->setObjectName(QStringLiteral("Elemet_15"));
-        Elemet_15->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_15, 0, 2, 1, 1);
-
-        Elemet_11 = new QTextEdit(gridLayoutWidget);
-        Elemet_11->setObjectName(QStringLiteral("Elemet_11"));
-        Elemet_11->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_11, 1, 2, 1, 1);
-
-        Elemet_6 = new QTextEdit(gridLayoutWidget);
-        Elemet_6->setObjectName(QStringLiteral("Elemet_6"));
-        Elemet_6->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_6, 2, 1, 1, 1);
-
-        Elemet_10 = new QTextEdit(gridLayoutWidget);
-        Elemet_10->setObjectName(QStringLiteral("Elemet_10"));
-        Elemet_10->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_10, 1, 1, 1, 1);
-
-        Elemet_7 = new QTextEdit(gridLayoutWidget);
-        Elemet_7->setObjectName(QStringLiteral("Elemet_7"));
-        Elemet_7->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_7, 2, 2, 1, 1);
-
-        Elemet_3 = new QTextEdit(gridLayoutWidget);
-        Elemet_3->setObjectName(QStringLiteral("Elemet_3"));
-        Elemet_3->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_3, 3, 2, 1, 1);
-
-        Elemet_1 = new QTextEdit(gridLayoutWidget);
-        Elemet_1->setObjectName(QStringLiteral("Elemet_1"));
-        Elemet_1->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_1, 3, 0, 1, 1);
-
-        Elemet_14 = new QTextEdit(gridLayoutWidget);
-        Elemet_14->setObjectName(QStringLiteral("Elemet_14"));
-        Elemet_14->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_14, 0, 1, 1, 1);
-
-        Elemet_16 = new QTextEdit(gridLayoutWidget);
-        Elemet_16->setObjectName(QStringLiteral("Elemet_16"));
-        Elemet_16->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_16, 0, 3, 1, 1);
-
-        Elemet_12 = new QTextEdit(gridLayoutWidget);
-        Elemet_12->setObjectName(QStringLiteral("Elemet_12"));
-        Elemet_12->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_12, 1, 3, 1, 1);
-
-        Elemet_8 = new QTextEdit(gridLayoutWidget);
-        Elemet_8->setObjectName(QStringLiteral("Elemet_8"));
-        Elemet_8->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_8, 2, 3, 1, 1);
-
-        Elemet_4 = new QTextEdit(gridLayoutWidget);
-        Elemet_4->setObjectName(QStringLiteral("Elemet_4"));
-        Elemet_4->setReadOnly(true);
-
-        gridLayout->addWidget(Elemet_4, 3, 3, 1, 1);
-
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(60, -20, 401, 131));
@@ -204,10 +97,141 @@ public:
 
         horizontalLayout->addWidget(ButtonReset);
 
+        lineEdit_14 = new QLineEdit(centralWidget);
+        lineEdit_14->setObjectName(QStringLiteral("lineEdit_14"));
+        lineEdit_14->setGeometry(QRect(140, 100, 109, 105));
+        lineEdit_14->setMinimumSize(QSize(105, 105));
+        lineEdit_14->setBaseSize(QSize(105, 105));
+        QFont font2;
+        font2.setFamily(QStringLiteral("Times New Roman"));
+        font2.setPointSize(20);
+        lineEdit_14->setFont(font2);
+        lineEdit_14->setAlignment(Qt::AlignCenter);
+        lineEdit_14->setReadOnly(true);
+        lineEdit_13 = new QLineEdit(centralWidget);
+        lineEdit_13->setObjectName(QStringLiteral("lineEdit_13"));
+        lineEdit_13->setGeometry(QRect(30, 100, 109, 105));
+        lineEdit_13->setMinimumSize(QSize(105, 105));
+        lineEdit_13->setBaseSize(QSize(105, 105));
+        lineEdit_13->setFont(font2);
+        lineEdit_13->setAlignment(Qt::AlignCenter);
+        lineEdit_13->setReadOnly(true);
+        lineEdit_16 = new QLineEdit(centralWidget);
+        lineEdit_16->setObjectName(QStringLiteral("lineEdit_16"));
+        lineEdit_16->setGeometry(QRect(360, 100, 109, 105));
+        lineEdit_16->setMinimumSize(QSize(105, 105));
+        lineEdit_16->setBaseSize(QSize(105, 105));
+        lineEdit_16->setFont(font2);
+        lineEdit_16->setAlignment(Qt::AlignCenter);
+        lineEdit_16->setReadOnly(true);
+        lineEdit_15 = new QLineEdit(centralWidget);
+        lineEdit_15->setObjectName(QStringLiteral("lineEdit_15"));
+        lineEdit_15->setGeometry(QRect(250, 100, 109, 105));
+        lineEdit_15->setMinimumSize(QSize(105, 105));
+        lineEdit_15->setBaseSize(QSize(105, 105));
+        lineEdit_15->setFont(font2);
+        lineEdit_15->setAlignment(Qt::AlignCenter);
+        lineEdit_15->setReadOnly(true);
+        lineEdit_11 = new QLineEdit(centralWidget);
+        lineEdit_11->setObjectName(QStringLiteral("lineEdit_11"));
+        lineEdit_11->setGeometry(QRect(250, 210, 109, 105));
+        lineEdit_11->setMinimumSize(QSize(105, 105));
+        lineEdit_11->setBaseSize(QSize(105, 105));
+        lineEdit_11->setFont(font2);
+        lineEdit_11->setAlignment(Qt::AlignCenter);
+        lineEdit_11->setReadOnly(true);
+        lineEdit_10 = new QLineEdit(centralWidget);
+        lineEdit_10->setObjectName(QStringLiteral("lineEdit_10"));
+        lineEdit_10->setGeometry(QRect(140, 210, 109, 105));
+        lineEdit_10->setMinimumSize(QSize(105, 105));
+        lineEdit_10->setBaseSize(QSize(105, 105));
+        lineEdit_10->setFont(font2);
+        lineEdit_10->setAlignment(Qt::AlignCenter);
+        lineEdit_10->setReadOnly(true);
+        lineEdit_9 = new QLineEdit(centralWidget);
+        lineEdit_9->setObjectName(QStringLiteral("lineEdit_9"));
+        lineEdit_9->setGeometry(QRect(30, 210, 109, 105));
+        lineEdit_9->setMinimumSize(QSize(105, 105));
+        lineEdit_9->setBaseSize(QSize(105, 105));
+        lineEdit_9->setFont(font2);
+        lineEdit_9->setAlignment(Qt::AlignCenter);
+        lineEdit_9->setReadOnly(true);
+        lineEdit_12 = new QLineEdit(centralWidget);
+        lineEdit_12->setObjectName(QStringLiteral("lineEdit_12"));
+        lineEdit_12->setGeometry(QRect(360, 210, 109, 105));
+        lineEdit_12->setMinimumSize(QSize(105, 105));
+        lineEdit_12->setBaseSize(QSize(105, 105));
+        lineEdit_12->setFont(font2);
+        lineEdit_12->setAlignment(Qt::AlignCenter);
+        lineEdit_12->setReadOnly(true);
+        lineEdit_8 = new QLineEdit(centralWidget);
+        lineEdit_8->setObjectName(QStringLiteral("lineEdit_8"));
+        lineEdit_8->setGeometry(QRect(360, 320, 109, 105));
+        lineEdit_8->setMinimumSize(QSize(105, 105));
+        lineEdit_8->setBaseSize(QSize(105, 105));
+        lineEdit_8->setFont(font2);
+        lineEdit_8->setAlignment(Qt::AlignCenter);
+        lineEdit_8->setReadOnly(true);
+        lineEdit_6 = new QLineEdit(centralWidget);
+        lineEdit_6->setObjectName(QStringLiteral("lineEdit_6"));
+        lineEdit_6->setGeometry(QRect(140, 320, 109, 105));
+        lineEdit_6->setMinimumSize(QSize(105, 105));
+        lineEdit_6->setBaseSize(QSize(105, 105));
+        lineEdit_6->setFont(font2);
+        lineEdit_6->setAlignment(Qt::AlignCenter);
+        lineEdit_6->setReadOnly(true);
+        lineEdit_5 = new QLineEdit(centralWidget);
+        lineEdit_5->setObjectName(QStringLiteral("lineEdit_5"));
+        lineEdit_5->setGeometry(QRect(30, 320, 109, 105));
+        lineEdit_5->setMinimumSize(QSize(105, 105));
+        lineEdit_5->setBaseSize(QSize(105, 105));
+        lineEdit_5->setFont(font2);
+        lineEdit_5->setAlignment(Qt::AlignCenter);
+        lineEdit_5->setReadOnly(true);
+        lineEdit_7 = new QLineEdit(centralWidget);
+        lineEdit_7->setObjectName(QStringLiteral("lineEdit_7"));
+        lineEdit_7->setGeometry(QRect(250, 320, 109, 105));
+        lineEdit_7->setMinimumSize(QSize(105, 105));
+        lineEdit_7->setBaseSize(QSize(105, 105));
+        lineEdit_7->setFont(font2);
+        lineEdit_7->setAlignment(Qt::AlignCenter);
+        lineEdit_7->setReadOnly(true);
+        lineEdit_4 = new QLineEdit(centralWidget);
+        lineEdit_4->setObjectName(QStringLiteral("lineEdit_4"));
+        lineEdit_4->setGeometry(QRect(360, 430, 109, 105));
+        lineEdit_4->setMinimumSize(QSize(105, 105));
+        lineEdit_4->setBaseSize(QSize(105, 105));
+        lineEdit_4->setFont(font2);
+        lineEdit_4->setAlignment(Qt::AlignCenter);
+        lineEdit_4->setReadOnly(true);
+        lineEdit_2 = new QLineEdit(centralWidget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+        lineEdit_2->setGeometry(QRect(140, 430, 109, 105));
+        lineEdit_2->setMinimumSize(QSize(105, 105));
+        lineEdit_2->setBaseSize(QSize(105, 105));
+        lineEdit_2->setFont(font2);
+        lineEdit_2->setAlignment(Qt::AlignCenter);
+        lineEdit_2->setReadOnly(true);
+        lineEdit_1 = new QLineEdit(centralWidget);
+        lineEdit_1->setObjectName(QStringLiteral("lineEdit_1"));
+        lineEdit_1->setGeometry(QRect(30, 430, 109, 105));
+        lineEdit_1->setMinimumSize(QSize(105, 105));
+        lineEdit_1->setBaseSize(QSize(105, 105));
+        lineEdit_1->setFont(font2);
+        lineEdit_1->setAlignment(Qt::AlignCenter);
+        lineEdit_1->setReadOnly(true);
+        lineEdit_3 = new QLineEdit(centralWidget);
+        lineEdit_3->setObjectName(QStringLiteral("lineEdit_3"));
+        lineEdit_3->setGeometry(QRect(250, 430, 109, 105));
+        lineEdit_3->setMinimumSize(QSize(105, 105));
+        lineEdit_3->setBaseSize(QSize(105, 105));
+        lineEdit_3->setFont(font2);
+        lineEdit_3->setAlignment(Qt::AlignCenter);
+        lineEdit_3->setReadOnly(true);
         Qt2048Class->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Qt2048Class);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 505, 26));
+        menuBar->setGeometry(QRect(0, 0, 497, 26));
         Qt2048Class->setMenuBar(menuBar);
         mainToolBar = new QToolBar(Qt2048Class);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -226,86 +250,6 @@ public:
     void retranslateUi(QMainWindow *Qt2048Class)
     {
         Qt2048Class->setWindowTitle(QApplication::translate("Qt2048Class", "Qt2048", Q_NULLPTR));
-        Elemet_5->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_9->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_13->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_2->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_15->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_11->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_6->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_10->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_7->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_3->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_1->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_14->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_16->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_12->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_8->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
-        Elemet_4->setHtml(QApplication::translate("Qt2048Class", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'SimSun'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", Q_NULLPTR));
         label->setText(QApplication::translate("Qt2048Class", "let's play 2048!", Q_NULLPTR));
         ButtonStart->setText(QApplication::translate("Qt2048Class", "Start", Q_NULLPTR));
         ButtonReset->setText(QApplication::translate("Qt2048Class", "Reset", Q_NULLPTR));

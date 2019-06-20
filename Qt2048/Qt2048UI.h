@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <functional>
 
 #include "Qt2048.h"
 
@@ -17,31 +18,30 @@ public:
 	~Qt2048UI();
 private:
 	Ui::Qt2048Class ui;
-	typedef std::map<int, QTextEdit *> ElementMap; //保存16个element
-	typedef std::map<int, std::string> ColorMap; //保存数字和颜色信息
-	typedef std::map<int, QTextEdit *>::iterator elementIter;
+	typedef std::map<int, QLineEdit *> ElementMap; 
+	typedef std::map<int, std::string> ColorMap; 
+	typedef std::map<int, QLineEdit *>::iterator elementIter;
 	typedef std::map<int, std::string>::iterator colorIter;
 
 	ElementMap m_elementMap;
 	ColorMap m_colorMap;
 	elementIter m_elementIter;
 	colorIter m_colorIter;
-
 	Q2048::Qt2048 m_Qt2048;
 
 	
-public	Q_SLOTS:     //> 不带这个宏无法响应,非槽函数不要放在此处
+public	Q_SLOTS:     //> Q_SLOTS
 	void startGame();
 	void resetGame();
 
 private:
 	void keyPressEvent(QKeyEvent *event) override;
-	void init(); //初始化颜色、数字
+	void init();
 	void initColorMap();
-	void initElementMap(); //初始化控件颜色
-	void updateUI(int curdata[]); //updae ui
-
-	inline QTextEdit *getElement(int index) const
+	void initElementMap(); 
+	void updateUI(int curdata[]); 
+	void updateStatus();
+	inline QLineEdit *getElement(int index) const
 	{
 		return m_elementMap.find(index)->second;
 	}
@@ -50,5 +50,7 @@ private:
 	{ 
 		return m_colorMap.find(index)->second;
 	}
+private:
+	bool b_isStart;
 
 };

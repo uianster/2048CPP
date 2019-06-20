@@ -3,316 +3,219 @@
 #include <algorithm>
 #include <time.h>
 #include "Qt2048.h"
+
 namespace Q2048 {
-Qt2048::Qt2048()
-{
-	m_bFirstTime = true;
-	memset(m_curdata, 0, sizeof(int) * 16);
-}
-
-Qt2048::~Qt2048()
-{
-
-}
-void Qt2048::oprateDown() //ÏòÏÂ²Ù×÷
-{
-	//È¥³ý¿ÕÏ¶
-	removeDownSpace();
-	bool isChange = false;
-
-	//ºÏ²¢´¦Àí
-	for (int j = 0; j < 4; j++)
+	Qt2048::Qt2048()
 	{
-		int k = 0;
-		for (int i = 1; i < 4; i++)
-		{
-			if (m_curdata[j + 4 * i] == 0)
-			{
-				continue;
-			}
-			if (m_curdata[j + 4 * (i - 1)] == m_curdata[j + 4 * i])
-			{
-				m_curdata[j + 4 * (i - 1)] += m_curdata[j + 4 * i];
-				m_curdata[j + 4 * i] = 0;
-				isChange = true;
-			}
-		}
+		m_bFirstTime = true;
+		memset(m_curData, 0, sizeof(int) * 16);
+		memset(m_curDatacopy, 1, sizeof(int) * 16);
+		srand(time(NULL));
 	}
 
-	if (isChange || m_bDownLock)
+	Qt2048::~Qt2048()
 	{
+	}
+
+	void Qt2048::CallBackProc(Proc callback)
+	{
+		m_procStatus = callback;
+	}
+
+	void Qt2048::operateDown()
+	{
+		downToLeft();
+		bool ischanged = moveData();
+		downToLeft();
+		if (ischanged)
 		generateRanData();
 	}
-	else
+	void Qt2048::operateUp()
 	{
-		m_bleftLock = true;
-		m_bRightLock = true;
-		m_bUpLock = true;
+		upToLeft();
+		bool ischanged = moveData();
+		upToLeft();
+		if (ischanged)
+		generateRanData();
+
 	}
-	m_bDownLock = false;
-
-	//È¥³ý¿ÕÏ¶
-	removeDownSpace();
-}
-
-void Qt2048::oprateUp()
-{
-	removeUPSpace();
-	bool isChange = false;
-
-	//ºÏ²¢´¦Àí
-	for (int j = 0; j < 4; j++)
+	void Qt2048::operateLeft()
 	{
-		int k = 0;
-		for (int i = 3; i >= 1; i--)
-		{
-			if (m_curdata[j + 4 * (i - 1)] == 0)
-			{
-				continue;
-			}
-			if (m_curdata[j + 4 * i] == m_curdata[j + 4 * (i - 1)])
-			{
-				m_curdata[j + 4 * i] += m_curdata[j + 4 * (i - 1)];
-				m_curdata[j + 4 * (i - 1)] = 0;
-				isChange = true;
-			}
-		}
-	}
-
-	if (isChange || m_bUpLock)
-	{
+		bool ischanged = moveData();
+		if (ischanged)
 		generateRanData();
 	}
-	else
+	void Qt2048::operateRight()
 	{
-		m_bleftLock = true;
-		m_bRightLock = true;
-		m_bDownLock = true;
-	}
-
-	m_bUpLock = false;
-
-	removeUPSpace();
-}
-
-void Qt2048::oprateRight()
-{
-	removeRightSpace();
-	bool isChange = false;
-	//ºÏ²¢´¦Àí
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 3;
-		for (int i = 3; i >= 0; i--)
+		rightToLeft();
+		bool ischanged = moveData();
+		rightToLeft();
+		if (ischanged)
 		{
-			if (m_curdata[(i - 1) + j * 4] == 0)
-			{
-				continue;
-			}
-
-			if (m_curdata[(i - 1) + j * 4] == m_curdata[i + j * 4])
-			{
-				m_curdata[(i - 1) + j * 4] += m_curdata[i + j * 4];
-				m_curdata[i + j * 4] = 0;
-				isChange = true;
-			}
-		}
-	}
-
-	if (isChange || m_bRightLock)
-	{
-		generateRanData();
-	}
-	else
-	{
-		m_bUpLock = true;
-		m_bleftLock = true;
-		m_bDownLock = true;
-	}
-
-	m_bRightLock = false;
-	
-	removeRightSpace();
-}
-
-void Qt2048::oprateLeft()
-{
-	removeLeftSpace();
-	bool isChange = false;
-
-	//ºÏ²¢´¦Àí
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 0;
-		for (int i = 1; i < 4; i++)
-		{
-			if (m_curdata[i + j * 4] == 0)
-			{
-				continue;
-			}
-			if (m_curdata[i + j * 4] == m_curdata[(i - 1) + 4 * j])
-			{
-				m_curdata[(i - 1) + 4 * j] += m_curdata[i + j * 4];
-				m_curdata[i + j * 4] = 0;
-				isChange = true;
-			}
-		}
-	}
-	if (isChange || m_bleftLock)
-	{
-		generateRanData();
-	}
-	else
-	{
-		m_bUpLock = true;
-		m_bRightLock = true;
-		m_bDownLock = true;
-	}
-
-	m_bleftLock = false;
-
-	removeLeftSpace();
-}
-
-void Qt2048::removeUPSpace()
-{
-	int curdatacopy[16] = { 0 };
-	//È¥³ý¿ÕÏ¶
-
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 3;
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_curdata[j + i * 4] != 0)
-			{
-				curdatacopy[j + k * 4] = m_curdata[j + i * 4];
-				k--;
-			}
-		}
-	}
-
-	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
-}
-
-void Qt2048::removeDownSpace()
-{
-	int curdatacopy[16] = { 0 };
-
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_curdata[j + i * 4] != 0)
-			{
-				curdatacopy[j + k * 4] = m_curdata[j + i * 4];
-				k++;
-			}
-		}
-	}
-
-	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
-}
-
-void Qt2048::removeLeftSpace()
-{
-	int curdatacopy[16] = { 0 };
-
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 0;
-		for (int i = 0; i < 4; i++)
-		{
-			if (m_curdata[i + j * 4] != 0)
-			{
-				curdatacopy[k + j * 4] = m_curdata[i + j * 4];
-				k++;
-			}
-		}
-	}
-
-	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
-}
-
-void Qt2048::removeRightSpace()
-{
-	int curdatacopy[16] = { 0 };
-
-	for (int j = 0; j < 4; j++)
-	{
-		int k = 3;
-		for (int i = 3; i >= 0; i--)
-		{
-			if (m_curdata[i + j * 4] != 0)
-			{
-				curdatacopy[k + j * 4] = m_curdata[i + j * 4];
-				k--;
-			}
-		}
-	}
-
-	memcpy(m_curdata, curdatacopy, sizeof(int) * 16);
-}
-void fun()
-{
-
-}
-void Qt2048::generateRanData()
-{
-	srand((unsigned)time(NULL));
-	if (m_bFirstTime) //µÚÒ»´ÎÉú³ÉÁ½¸ö
-	{
-		int index1 = (rand() % (15 - 0)) + 0;
-		int index2 = (rand() % (15 - 0)) + 0;
-
-		m_curdata[index1] = 2;
-		m_curdata[index2] = 2;
-		
-		m_bFirstTime = false;
-	}
-	else
-	{
-		bool isFull = true;
-
-		for (int i = 0; i < 16; i++)
-		{
-			if (m_curdata[i] != 0)
-			{
-				isFull = false;
-				break;
-			}
+			generateRanData();
 		}
 		
-		if (isFull) //Èç¹ûm_curdataÖÐÃ»ÓÐÁãÁË£¬Ôõgameover
+	}
+
+	bool Qt2048::moveData()
+	{
+		memcpy(m_curDatacopy, m_curData, sizeof(int) * 16);
+		for (int i = 0; i < 4; ++i)
 		{
-			//TODO game over!! Ê¹ÓÃ»Øµ÷º¯ÊýÍ¨Öª
+			int Pos = 0;
+			int lastValue = 0;
+			for (int j = 0; j < 4; ++j)
+			{
+				if (m_curData[j + i * 4] == 0)
+				{
+					continue;
+				}
+				if (lastValue == 0)
+				{
+					lastValue = m_curData[j + i * 4];
+				}
+				else
+				{
+					if (lastValue == m_curData[j + i * 4]) {
+						m_curData[Pos + i * 4] = lastValue * 2;
+						lastValue = 0;
+
+					}
+					else {
+						m_curData[Pos + i * 4] = lastValue;
+						lastValue = m_curData[j + i * 4];
+					}
+					++Pos;
+				}
+
+				m_curData[j + i * 4] = 0; //ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½
+			}
+			if (lastValue != 0) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
+			{
+				m_curData[Pos + i * 4] = lastValue;
+			}
+		}
+		if (std::equal(std::begin(m_curDatacopy), std::end(m_curDatacopy), std::begin(m_curData)))
+		{
+			return false;
+		}
+		return true;
+	}
+
+	void Qt2048::upToLeft()
+	{
+		int curdatacopy[16] = { 0 };
+		//È¥ï¿½ï¿½ï¿½ï¿½Ï¶
+		int m;
+		for (int j = 0, m = 3; j < 4; j++)
+		{
+			int k = 3;
+			for (int i = 0; i < 4; i++)
+			{
+				curdatacopy[m + k * 4] = m_curData[i + j * 4];
+				k--;
+			}
+			m--;
+		}
+
+		memcpy(m_curData, curdatacopy, sizeof(int) * 16);
+	}
+
+	void Qt2048::downToLeft()
+	{
+		int curdatacopy[16] = { 0 };
+		//È¥ï¿½ï¿½ï¿½ï¿½Ï¶
+		int i, k;
+		for (int j = 0; j < 4; j++)
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				curdatacopy[j + i * 4] = m_curData[i + j * 4];
+			}
+		}
+		memcpy(m_curData, curdatacopy, sizeof(int) * 16);
+	}
+
+	void Qt2048::rightToLeft()
+	{
+		int curdatacopy[16] = { 0 };
+		int i, k;
+
+		for (int j = 0; j < 4; j++)
+		{
+			for (i = 3, k = 0; i >= 0; i--, k++)
+			{
+				curdatacopy[k + 4 * j] = m_curData[i + 4 * j];
+			}
+		}
+
+		memcpy(m_curData, curdatacopy, sizeof(int) * 16);
+	}
+
+	bool Qt2048::isGameOver()
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				// ï¿½Ð¿ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½
+				if ((j + 1 < 4) && (m_curData[i + 4 * j] * m_curData[i + 4 * (j + 1)] == 0 \
+					|| m_curData[i + 4 * j] == m_curData[i + 4 * (j + 1)]))
+				{
+					return false;
+				}
+				if ((i + 1 < 4) && (m_curData[i + 4 * j] * m_curData[i + 1 + 4 * j] == 0 \
+					|| m_curData[i + 4 * j] == m_curData[i + 1 + 4 * j]))
+				{
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	void Qt2048::generateRanData()
+	{
+
+		srand((unsigned)time(NULL));
+		if (m_bFirstTime) //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		{
+			int index1 = (rand() % (15 - 0)) + 0;
+			int index2 = (rand() % (15 - 0)) + 0;
+
+			m_curData[index1] = 2;
+			m_curData[index2] = 2;
+
+			m_bFirstTime = false;
 		}
 		else
 		{
-			std::vector<int > c;
+			randomFillData();
 
-			for (int i = 0; i < 16; i++)
+			if (isGameOver())			
 			{
-				if (m_curdata[i] == 0)
-				{
-					c.push_back(i);
-				}
-			}
-
-			int index = rand() % c.size();
-			int tem = c[index];
-
-			if (1 == rand() % 10) //10%µÄ¸ÅÂÊ³öÏÖ
-			{
-				m_curdata[tem] = 4;
-			}
-			else
-			{
-				m_curdata[tem] = 2;
+				m_procStatus();		//TODO game over!! Ê¹ï¿½Ã»Øµï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öª
+				return;
 			}
 		}
 	}
-}
+
+	void Qt2048::randomFillData()
+	{
+		std::vector<int >vecZero;
+		for (int i = 0; i < 16; i++)
+		{
+			if (m_curData[i] == 0)
+			{
+				vecZero.push_back(i);
+			}
+		}
+		if (vecZero.size()!=0)//ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½
+		{
+			int index = vecZero[rand() % vecZero.size()];
+			m_curData[index] = rand() % 10 == 1 ? 4 : 2;
+		}
+	}
 
 }; //namespace Q2048
